@@ -2,6 +2,30 @@ import re
 from math import acos, sqrt, pow, fabs
 
 
+def read_from_file(filename: str) -> list:
+    """
+    Method for reading data from file.
+    :param filename: file name
+    :return: two string
+    """
+    with open(filename, "rt") as source:
+        input_text = source.readlines()
+    return input_text
+
+
+def process_polygons(input_text: list) -> int:
+    """
+    Main method for processing input data into output.
+    Parse polygon`s coordinates and define the final result, return it.
+    :param input_text: list with two strings
+    :return: int, 1 if polygons are not equal, 0 if not.
+    """
+    polygon_fst_str, polygon_sec_str = input_text
+    polygon_fst = parse_coords(polygon_fst_str)
+    polygon_sec = parse_coords(polygon_sec_str)
+    return are_polygons_identical(polygon_fst, polygon_sec)
+
+
 def parse_coords(polygon_input: str) -> list:
     """
     Method parse coordinates of dots into list of int pairs.
@@ -111,13 +135,3 @@ def calc_polygon_sides(polygon: list) -> list:
         side = calc_vector_length(calc_vector_coords(start_point, finish_point))
         sides.append(side)
     return sides
-
-
-filename = input("Please, enter the filename\n")
-with open(filename, "rt") as source:
-    input_text = source.readlines()
-polygon_fst_str, polygon_sec_str = input_text
-polygon_fst = parse_coords(polygon_fst_str)
-polygon_sec = parse_coords(polygon_sec_str)
-
-print(are_polygons_identical(polygon_fst, polygon_sec))
