@@ -36,6 +36,8 @@ def parse_coords(polygon_input: str) -> list:
     ready_pattern = re.compile("-?\d{1,5},-?\d{1,5}")
     # find all numbers with format {number,number}
     dots_str_tuples = re.findall(ready_pattern, polygon_input)
+    if len(dots_str_tuples) == 0:
+        raise ValueError("Wrong input")
     # go through all founded strings, split it by , and transform it into int
     coords = [list(map(int, dot_str_tuple.split(','))) for dot_str_tuple in dots_str_tuples]
     return coords
